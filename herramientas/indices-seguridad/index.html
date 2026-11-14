@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Índices de seguridad (IF, IS, IA) · Juan Cori</title>
+<meta name="description" content="Calculadora de índices de frecuencia, severidad y accidentabilidad para obras y proyectos. Funciona en el navegador, sin enviar datos.">
+<link rel="canonical" href="https://www.juancori.com/herramientas/indices-seguridad/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f4f1ea;--ink:#14202b;--ink2:#46525e;--line:#cfc8b8;--accent:#e8590c;--steel:#1f5673;--card:#fbf9f4}
+[data-theme=dark]{--paper:#10181f;--ink:#ece8df;--ink2:#a4adb5;--line:#2c3a47;--accent:#ff7a2e;--steel:#6fb3d6;--card:#172430}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+.mono{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font:800 18px Archivo,sans-serif;text-decoration:none;color:inherit}.brand b{color:var(--accent)}
+header a.back{font-size:14px;color:var(--ink2);text-decoration:none}
+h1{font:800 clamp(34px,6vw,64px)/1 Archivo,sans-serif;font-stretch:80%;text-transform:uppercase;margin:14px 0 12px}
+.intro{max-width:620px;color:var(--ink2);margin:0 0 34px}
+main{padding:48px 0 70px}
+.grid{display:grid;grid-template-columns:1fr 1.1fr;gap:28px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.box{border:1px solid var(--line);background:var(--card);padding:26px}
+label{display:block;font-size:14px;font-weight:500;margin:16px 0 6px}
+label:first-of-type{margin-top:0}
+input{width:100%;padding:11px 12px;font:500 17px "IBM Plex Mono",monospace;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+input:focus{outline:none;border-color:var(--accent)}
+.hint{font-size:13px;color:var(--ink2);margin-top:4px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+button{font:600 14.5px "IBM Plex Sans",sans-serif;padding:11px 18px;border:1.5px solid var(--ink);background:none;color:var(--ink);cursor:pointer}
+button.p{background:var(--ink);color:var(--paper)}
+button:hover{box-shadow:3px 3px 0 var(--accent)}
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.r{background:var(--card);padding:20px 16px}
+.r b{display:block;font:800 clamp(30px,4.6vw,44px)/1 Archivo,sans-serif;font-stretch:82%;margin:8px 0 6px}
+.r small{font-size:12.5px;color:var(--ink2)}
+.r.k b{color:var(--accent)}
+.formula{margin-top:20px;font:400 13.5px/1.9 "IBM Plex Mono",monospace;color:var(--ink2)}
+.err{color:#c92a2a;font-size:14px;min-height:20px;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{font:500 11.5px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+td button{padding:2px 8px;border:0;font-size:16px}
+.empty{color:var(--ink2);font-size:14px;margin:14px 0 0}
+.note{margin-top:34px;font-size:13.5px;color:var(--ink2);max-width:720px}
+h2{font:700 20px Archivo,sans-serif;margin:0}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../../">JUAN CORI<b>.</b></a><a class="back" href="../../#herramientas">← Volver a herramientas</a></div></header>
+<main><div class="wrap">
+<div class="mono">Herramienta · SSOMA</div>
+<h1>Índices de seguridad</h1>
+<p class="intro">Calcula los índices de frecuencia, severidad y accidentabilidad de un periodo. Todo se procesa en su navegador: los datos no salen de su equipo.</p>
+<div class="grid">
+<form class="box" id="f" novalidate>
+<label for="per">Periodo o frente de trabajo</label><input id="per" type="text" placeholder="p. ej. Octubre 2026" maxlength="40" style="font-family:inherit">
+<label for="acc">N.º de accidentes incapacitantes y mortales</label><input id="acc" type="number" min="0" step="1" inputmode="numeric" value="0">
+<label for="dias">Días perdidos</label><input id="dias" type="number" min="0" step="1" inputmode="numeric" value="0">
+<label for="hht">Horas-hombre trabajadas (HHT)</label><input id="hht" type="number" min="1" step="1" inputmode="numeric" placeholder="p. ej. 250000">
+<div class="hint">Total de horas efectivamente trabajadas en el periodo.</div>
+<div class="err" id="err" role="alert"></div>
+<div class="btns"><button class="p" type="submit">Guardar en el historial</button><button type="reset">Limpiar</button></div>
+</form>
+<div>
+<div class="res" aria-live="polite">
+<div class="r"><span class="mono">IF</span><b id="if">—</b><small>Índice de frecuencia</small></div>
+<div class="r"><span class="mono">IS</span><b id="is">—</b><small>Índice de severidad</small></div>
+<div class="r k"><span class="mono">IA</span><b id="ia">—</b><small>Índice de accidentabilidad</small></div>
+</div>
+<div class="formula">IF = N.º accidentes × 1 000 000 / HHT<br>IS = Días perdidos × 1 000 000 / HHT<br>IA = IF × IS / 1000</div>
+<div class="box" style="margin-top:22px">
+<div class="hrow"><h2>Historial</h2><div class="btns" style="margin:0"><button id="csv" type="button">Exportar CSV</button><button id="clr" type="button">Borrar todo</button></div></div>
+<p class="empty" id="empty">Aún no hay registros guardados.</p>
+<table id="tb" hidden><thead><tr><th>Periodo</th><th>Acc.</th><th>Días</th><th>HHT</th><th>IF</th><th>IS</th><th>IA</th><th></th></tr></thead><tbody></tbody></table>
+</div>
+</div>
+</div>
+<p class="note">Fórmulas con base de un millón de horas-hombre, como las define el Reglamento de Seguridad y Salud Ocupacional en Minería del Perú (D.S. 024-2016-EM). Algunas organizaciones usan una base de 200 000 horas; verifique el criterio de su proyecto antes de reportar. El historial se guarda solo en este navegador.</p>
+</div></main>
+<script>
+const $=id=>document.getElementById(id),fmt=n=>n.toLocaleString('es-PE',{maximumFractionDigits:2});
+let th=null;try{th=localStorage.getItem('jc-theme')}catch(e){}if(!th&&matchMedia('(prefers-color-scheme:dark)').matches)th='dark';if(th)document.documentElement.dataset.theme=th;
+let hist=[];try{hist=JSON.parse(localStorage.getItem('jc-indices')||'[]')}catch(e){}
+function calc(){const a=+$('acc').value,d=+$('dias').value,h=+$('hht').value;
+if(!(h>0)||a<0||d<0||!Number.isFinite(a+d+h)){['if','is','ia'].forEach(k=>$(k).textContent='—');return null}
+const IF=a*1e6/h,IS=d*1e6/h,IA=IF*IS/1000;$('if').textContent=fmt(IF);$('is').textContent=fmt(IS);$('ia').textContent=fmt(IA);return{a,d,h,IF,IS,IA}}
+function save(){try{localStorage.setItem('jc-indices',JSON.stringify(hist))}catch(e){}}
+function draw(){const tb=$('tb').tBodies[0];tb.innerHTML='';$('tb').hidden=!hist.length;$('empty').hidden=!!hist.length;
+hist.forEach((r,i)=>{const tr=tb.insertRow();[r.p,r.a,r.d,fmt(r.h),fmt(r.IF),fmt(r.IS),fmt(r.IA)].forEach(v=>tr.insertCell().textContent=v);
+const b=document.createElement('button');b.textContent='×';b.setAttribute('aria-label','Eliminar registro '+r.p);b.onclick=()=>{hist.splice(i,1);save();draw()};tr.insertCell().append(b)})}
+['acc','dias','hht'].forEach(k=>$(k).addEventListener('input',()=>{$('err').textContent='';calc()}));
+$('f').addEventListener('submit',e=>{e.preventDefault();const r=calc();if(!r){$('err').textContent='Ingrese las horas-hombre trabajadas (mayor que cero) y valores no negativos.';return}
+hist.push({p:$('per').value.trim()||'Sin nombre',...r});save();draw()});
+$('f').addEventListener('reset',()=>setTimeout(()=>{$('err').textContent='';calc()}));
+$('clr').onclick=()=>{hist=[];save();draw()};
+$('csv').onclick=()=>{if(!hist.length)return;const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
+const rows=[['Periodo','Accidentes','Dias perdidos','HHT','IF','IS','IA'],...hist.map(r=>[r.p,r.a,r.d,r.h,r.IF.toFixed(2),r.IS.toFixed(2),r.IA.toFixed(2)])];
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\r\n')],{type:'text/csv'}));a.download='indices-seguridad.csv';a.click();URL.revokeObjectURL(a.href)};
+draw();calc();
+</script>
+</body>
+</html>
