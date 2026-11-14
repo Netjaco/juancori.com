@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juan Cori · Ingeniero Civil · Calidad, SSOMA y gestión de contratos</title>
+<meta name="description" content="Ing. Juan Cori (CIP 91864). Más de 20 años en minería, infraestructura y sector público. Especialista en calidad, SSOMA y administración de contratos en infraestructura de salud. Arequipa, Perú.">
+<meta property="og:title" content="Juan Cori · Ingeniero Civil">
+<meta property="og:description" content="Calidad, SSOMA y gestión de contratos en infraestructura pública. Más de 20 años entre minería, obra y Estado.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.juancori.com/">
+<link rel="canonical" href="https://www.juancori.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2314202b'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%23f4f1ea'%3EJC%3C/text%3E%3Crect x='12' y='50' width='40' height='4' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f4f1ea;--paper2:#ebe6db;--ink:#14202b;--ink2:#46525e;--line:#cfc8b8;--accent:#e8590c;--steel:#1f5673;--card:#fbf9f4}
+[data-theme=dark]{--paper:#10181f;--paper2:#16212b;--ink:#ece8df;--ink2:#a4adb5;--line:#2c3a47;--accent:#ff7a2e;--steel:#6fb3d6;--card:#172430}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+h1,h2,h3{font-family:Archivo,sans-serif;margin:0;line-height:1.05}
+h2{font-size:clamp(30px,4.4vw,48px);font-weight:750;font-stretch:88%;letter-spacing:-.01em}
+h3{font-size:20px;font-weight:650}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:22px;height:60px}
+.brand{font:800 18px Archivo,sans-serif;text-decoration:none;letter-spacing:.02em;margin-right:auto}
+.brand b{color:var(--accent)}
+nav a.l{font-size:14px;text-decoration:none;color:var(--ink2);padding:6px 0;border-bottom:2px solid transparent}
+nav a.l:hover,nav a.l.on{color:var(--ink);border-color:var(--accent)}
+#theme{background:none;border:1px solid var(--line);color:var(--ink);border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:15px}
+@media(max-width:760px){nav a.l{display:none}}
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.45;mask-image:linear-gradient(100deg,transparent 35%,#000 100%)}
+.hero .wrap{position:relative;padding-top:clamp(56px,9vw,110px);padding-bottom:clamp(48px,7vw,84px)}
+.hero h1{font-size:clamp(44px,8.6vw,112px);font-weight:800;font-stretch:78%;letter-spacing:-.02em;text-transform:uppercase;margin:18px 0 22px}
+.hero h1 span{display:block}
+.hero h1 .a{color:var(--accent)}
+.lead{max-width:640px;font-size:clamp(17px,1.9vw,21px);color:var(--ink2)}
+.lead strong{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-block;padding:13px 22px;font:600 15px "IBM Plex Sans",sans-serif;text-decoration:none;border:1.5px solid var(--ink);transition:transform .15s,background .15s,color .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--accent)}
+.btn.p{background:var(--ink);color:var(--paper)}
+.now{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--card);padding:7px 14px;border-radius:99px;font-size:13.5px}
+.now i{width:8px;height:8px;border-radius:50%;background:#2f9e44;box-shadow:0 0 0 0 #2f9e44;animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px transparent}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stat{padding:30px 24px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font:800 clamp(38px,5vw,60px)/1 Archivo,sans-serif;font-stretch:80%}
+.stat b em{font-style:normal;color:var(--accent)}
+.stat>span{font-size:14px;color:var(--ink2)}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+section{padding:clamp(60px,8vw,104px) 0;border-bottom:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.head p{max-width:460px;margin:0;color:var(--ink2);font-size:16px}
+.num{color:var(--accent)}
+/* especialidades */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cell{background:var(--paper);padding:28px 26px;transition:background .2s}
+.cell:hover{background:var(--card)}
+.cell .mono{color:var(--accent)}
+.cell h3{margin:12px 0 8px}
+.cell p{margin:0;font-size:15.5px;color:var(--ink2)}
+@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+/* trayectoria */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);margin-bottom:0}
+.tab{all:unset;cursor:pointer;padding:18px 20px;border-left:1px solid var(--line);box-sizing:border-box;position:relative}
+.tab:first-child{border-left:0}
+.tab b{display:block;font:700 22px Archivo,sans-serif;font-stretch:85%}
+.tab span{font-size:13.5px;color:var(--ink2)}
+.tab[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.tab[aria-selected=true] span{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.tab[aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.panel{border:1px solid var(--line);border-top:0;padding:32px 28px;background:var(--card);display:grid;grid-template-columns:1fr 1.25fr;gap:36px}
+.panel h3{font-size:26px;margin-bottom:12px}
+.panel p{margin:0;color:var(--ink2)}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel li{padding:11px 0;border-bottom:1px dashed var(--line);display:grid;grid-template-columns:104px 1fr;gap:14px;font-size:15px}
+.panel li:last-child{border:0}
+.panel li time{font:500 12.5px "IBM Plex Mono",monospace;color:var(--accent);padding-top:3px}
+.panel li small{display:block;color:var(--ink2);font-size:14px}
+@media(max-width:860px){.tabs{grid-template-columns:1fr 1fr}.tab:nth-child(3){border-left:0}.tab:nth-child(n+3){border-top:1px solid var(--line)}.panel{grid-template-columns:1fr}}
+/* proyectos */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.f{all:unset;cursor:pointer;font:500 13px "IBM Plex Mono",monospace;padding:7px 14px;border:1px solid var(--line);border-radius:99px;color:var(--ink2)}
+.f[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.f:focus-visible{outline:2px solid var(--accent)}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pj{background:var(--card);border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:8px;transition:transform .2s,box-shadow .2s}
+.pj:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--steel)}
+.pj .top{display:flex;justify-content:space-between;gap:10px}
+.pj .tag{color:var(--steel)}
+.pj h3{font-size:18.5px;line-height:1.2}
+.pj p{margin:0;font-size:14.5px;color:var(--ink2)}
+.pj .role{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);font-size:13.5px}
+.pj.hide{display:none}
+@media(max-width:960px){.projects{grid-template-columns:1fr 1fr}}@media(max-width:620px){.projects{grid-template-columns:1fr}}
+/* formación */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:16px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:64px 1fr;gap:16px}
+.list li time{font:500 13px "IBM Plex Mono",monospace;color:var(--accent);padding-top:3px}
+.list li b{font-weight:600}
+.list li span{display:block;font-size:14.5px;color:var(--ink2)}
+.sub{margin:0 0 14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+/* herramientas */
+.tools{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}
+.tool{border:1px solid var(--line);padding:24px;background:var(--card);text-decoration:none;display:flex;flex-direction:column;gap:10px}
+.tool.live{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tool.live p{color:color-mix(in srgb,var(--paper) 72%,transparent)}
+.tool.live .mono{color:var(--accent)}
+.tool.live:hover{box-shadow:6px 6px 0 var(--accent);transform:translate(-3px,-3px)}
+.tool{transition:transform .2s,box-shadow .2s}
+.tool p{margin:0;font-size:15px;color:var(--ink2)}
+.tool .go{margin-top:auto;font-weight:600}
+.soon{opacity:.8;border-style:dashed}
+@media(max-width:860px){.tools{grid-template-columns:1fr}}
+/* contacto */
+.contact{background:var(--ink);color:var(--paper);border:0}
+.contact h2{font-size:clamp(36px,6.5vw,84px);text-transform:uppercase;font-stretch:78%;font-weight:800}
+.contact a.big{display:inline-block;margin-top:22px;font:600 clamp(20px,3vw,34px) Archivo,sans-serif;color:var(--accent);text-decoration:none;border-bottom:2px solid currentColor}
+.contact .row{display:flex;flex-wrap:wrap;gap:28px;margin-top:38px;font-size:15px;color:color-mix(in srgb,var(--paper) 72%,transparent)}
+.contact .row a{color:var(--paper)}
+footer{padding:22px 0;font-size:13px;color:var(--ink2)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.now i{animation:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+<a class="brand" href="#inicio">JUAN CORI<b>.</b></a>
+<a class="l" href="#especialidades">Especialidades</a>
+<a class="l" href="#trayectoria">Trayectoria</a>
+<a class="l" href="#proyectos">Proyectos</a>
+<a class="l" href="#formacion">Formación</a>
+<a class="l" href="#herramientas">Herramientas</a>
+<a class="l" href="#contacto">Contacto</a>
+<button id="theme" aria-label="Cambiar tema claro/oscuro">◐</button>
+</nav></div></header>
+
+<main>
+<div class="hero" id="inicio"><div class="wrap">
+<span class="now"><i></i>Hoy: Calidad y SSOMA en el IREN Sur · ANIN, Arequipa</span>
+<h1><span>Ingeniería civil</span><span class="a">que se controla,</span><span>se mide y se entrega.</span></h1>
+<p class="lead">Soy <strong>Juan Cori</strong>, ingeniero civil (CIP 91864) y magíster en Administración Estratégica de Empresas. Llevo más de veinte años entre <strong>obra, oficina técnica en gran minería y administración de contratos del Estado</strong>. Hoy hago seguimiento de calidad y SSOMA en infraestructura hospitalaria.</p>
+<div class="cta"><a class="btn p" href="#trayectoria">Ver trayectoria</a><a class="btn" href="#contacto">Contactar</a></div>
+</div></div>
+
+<div class="wrap"><div class="stats">
+<div class="stat"><b><span data-n="20">0</span><em>+</em></b><span>años de ejercicio profesional</span></div>
+<div class="stat"><b data-n="5">0</b><span>entidades públicas: ANIN, ARCC, PRONIS, PRONIED y PSI</span></div>
+<div class="stat"><b data-n="7">0</b><span>operaciones mineras e industriales</span></div>
+<div class="stat"><b data-n="9">0</b><span>regiones del Perú con obra ejecutada o supervisada</span></div>
+</div></div>
+
+<section id="especialidades"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">01</span> — Especialidades</div><h2>En qué puedo aportar</h2></div><p>Tres frentes que he ejercido desde ambos lados de la mesa: como contratista y como entidad.</p></div>
+<div class="grid3 rv">
+<div class="cell"><div class="mono">Calidad · SSOMA</div><h3>Seguimiento y auditoría</h3><p>Monitoreo de la gestión de calidad y de seguridad, salud ocupacional y medio ambiente. Auditor interno ISO 9001:2015 y OHSAS 18001.</p></div>
+<div class="cell"><div class="mono">Contratos</div><h3>Administración de contratos</h3><p>Valorizaciones, adelantos, ampliaciones de plazo, modificaciones y conformidades en obras públicas de salud, educación y riego. Entorno contractual NEC4 en ANIN.</p></div>
+<div class="cell"><div class="mono">Control de proyectos</div><h3>Oficina técnica</h3><p>Curva S, lookahead, control de horas-hombre, RFI, órdenes de cambio y cierre As Built bajo estándares de gran minería.</p></div>
+<div class="cell"><div class="mono">Obra</div><h3>Residencia y supervisión</h3><p>Dirección de obra civil y supervisión de campo electromecánica, con manejo de personal, procura y cumplimiento de costo y plazo.</p></div>
+<div class="cell"><div class="mono">Inversión pública</div><h3>Formulación de proyectos</h3><p>Formulación de proyectos de inversión en infraestructura educativa e inspección técnica de seguridad en edificaciones (ITSE especializado).</p></div>
+<div class="cell"><div class="mono">BIM · Docencia</div><h3>Gestión con BIM y aula</h3><p>Especialista en gestión y administración de proyectos con BIM. Docente universitario de Ingeniería Civil y Arquitectura.</p></div>
+</div>
+</div></section>
+
+<section id="trayectoria"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">02</span> — Trayectoria</div><h2>Cuatro etapas, un mismo oficio</h2></div><p>Del campo a la oficina técnica, de la minería al Estado y del Estado al aula. Elige una etapa.</p></div>
+<div class="rv">
+<div class="tabs" role="tablist" aria-label="Etapas de la trayectoria"></div>
+<div class="panel" role="tabpanel" id="panel" aria-live="polite"></div>
+</div>
+</div></section>
+
+<section id="proyectos"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">03</span> — Proyectos</div><h2>Dónde he trabajado</h2></div><p>Una selección de proyectos con mi rol en cada uno. Filtra por sector.</p></div>
+<div class="filters rv" role="group" aria-label="Filtrar proyectos por sector"></div>
+<div class="projects" id="projects"></div>
+</div></section>
+
+<section id="formacion"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">04</span> — Formación y docencia</div><h2>Lo que respalda el trabajo</h2></div></div>
+<div class="two">
+<div class="rv"><div class="mono sub">Grados y títulos</div><ul class="list">
+<li><time>2022</time><div><b>Especialista en Gestión y Administración de Proyectos con BIM</b><span>Universidad Continental</span></div></li>
+<li><time>2021</time><div><b>Inspector Técnico de Seguridad en Edificaciones (ITSE) Especializado</b><span>Ministerio de Vivienda, Construcción y Saneamiento · Universidad Católica San Pablo</span></div></li>
+<li><time>2018</time><div><b>Magíster en Administración Estratégica de Empresas</b><span>Pontificia Universidad Católica del Perú · CENTRUM</span></div></li>
+<li><time>2008</time><div><b>Diplomado en Contrataciones y Adquisiciones del Estado</b><span>Universidad Nacional de San Agustín</span></div></li>
+<li><time>2006</time><div><b>Ingeniero Civil · CIP 91864</b><span>Universidad Nacional de San Agustín de Arequipa</span></div></li>
+</ul></div>
+<div class="rv"><div class="mono sub">Docencia universitaria</div><ul class="list">
+<li><time>2023–26</time><div><b>Universidad Tecnológica del Perú</b><span>Catedrático en las escuelas de Ingeniería Civil y Arquitectura, Facultad de Ingeniería</span></div></li>
+<li><time>2023</time><div><b>Universidad Nacional de San Agustín</b><span>Catedrático en las escuelas de Ingeniería Civil y Arquitectura</span></div></li>
+</ul>
+<div class="mono sub" style="margin-top:34px">Cursos y herramientas</div><ul class="list">
+<li><time>ISO</time><div><b>Auditor interno ISO 9001:2015 y OHSAS 18001:2007</b><span>Interpretación de requisitos de ambas normas</span></div></li>
+<li><time>Obra</time><div><b>Valorización, liquidación, costos y presupuestos</b><span>Residencia, supervisión y seguridad en obras · Contrataciones con el Estado</span></div></li>
+<li><time>Soft</time><div><b>AutoCAD · MS Project · S10 · PowerCost</b><span>Ofimática avanzada</span></div></li>
+</ul></div>
+</div>
+</div></section>
+
+<section id="herramientas"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">05</span> — Herramientas</div><h2>Utilidades de trabajo</h2></div><p>Pequeñas aplicaciones que uso en el día a día y que comparto. Funcionan en el navegador y no envían datos a ningún servidor.</p></div>
+<div class="tools rv">
+<a class="tool live" href="herramientas/indices-seguridad/"><div class="mono">Disponible · SSOMA</div><h3>Índices de seguridad</h3><p>Calcula los índices de frecuencia, severidad y accidentabilidad a partir de accidentes, días perdidos y horas-hombre trabajadas. Guarda el historial y lo exporta.</p><span class="go">Abrir herramienta →</span></a>
+<div class="tool soon"><div class="mono">En preparación · Calidad</div><h3>Registro de no conformidades</h3><p>Seguimiento de hallazgos, acciones correctivas y fechas de cierre.</p></div>
+<div class="tool soon"><div class="mono">En preparación · Contratos</div><h3>Plazos contractuales</h3><p>Calculadora de fechas límite de respuesta y notificación.</p></div>
+</div>
+</div></section>
+
+<section class="contact" id="contacto"><div class="wrap">
+<div class="mono" style="color:var(--accent)">06 — Contacto</div>
+<h2 style="margin-top:14px">Conversemos<br>sobre su proyecto.</h2>
+<a class="big" href="mailto:master@juancori.com">master@juancori.com</a>
+<div class="row"><span>Arequipa, Perú</span><a href="https://www.linkedin.com/in/juancori/" target="_blank" rel="noopener">LinkedIn · /in/juancori</a><span>Ingeniero Civil · CIP 91864</span></div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="y"></span> Juan Antonio Cori Mamani</span><span class="mono">juancori.com</span></div></footer>
+
+<script>
+const stages=[
+{y:"2005–2010",t:"Obra y supervisión de campo",h:"Aprender el oficio en terreno",p:"Empecé como asistente de residente y supervisor de campo: mantenimiento de sedes públicas en el sur del país, obras viales e hidráulicas y montajes industriales de gran escala.",i:[
+["2009–2010","SSK Montajes e Instalaciones","Supervisor · Sider Perú (Chimbote), Shougang (Marcona) y C.H. El Platanal (Cañete)"],
+["2008","SSK · Doe Run Perú","Ing. de oficina técnica · Proyecto PAMA"],
+["2008","Pedrisa · Xstrata Tintaya","Residente de obra · Losas en truck shop"],
+["2007","AUTODEMA · Majes Siguas","Asistente técnico · Canal madre provisional Alto Siguas"],
+["2005–2007","ECHESA · MACSEL","Asistente de residente · Sedes de SUNAT y Aduanas en Arequipa, Tacna, Puno y Ayacucho; aeropuerto de Juliaca"]]},
+{y:"2010–2018",t:"Oficina técnica y residencia",h:"Control de proyectos en gran minería",p:"Pasé a planeamiento y control: curva S, lookahead, valorizaciones, RFI y cierre As Built para Cerro Verde, Antapaccay y Constancia. Luego dirigí obras como jefe de proyecto y residente.",i:[
+["2016–2018","Residencias de obra","Sedes de SENCICO en Cusco, Piura, Chorrillos y San Borja; terminal terrestre en Santa Rita de Siguas"],
+["2015–2016","B&B Murillo · Cerro Verde","Jefe de proyecto · Canales de riego Katari y Bajo Katari"],
+["2014","Siemens · Constancia (Hudbay)","Ing. civil supervisor · Obras civiles y electromecánicas"],
+["2013","CyM Vizcarra · Cerro Verde","Jefe de oficina técnica · Left Abutment Protective Filter, fase III"],
+["2011–2013","Bechtel – Graña y Montero","Oficina técnica y supervisor · Antapaccay, expansión Tintaya"],
+["2010–2011","G&T · Desprominc","Supervisor y planeamiento · Presa de relaves de Cerro Verde"]]},
+{y:"2019–2023",t:"Gestión pública",h:"Administrar contratos desde el Estado",p:"Del lado de la entidad: evaluación de avances, informes técnico-administrativos, adelantos, ampliaciones de plazo y conformidad de valorizaciones en obras de salud, educación y riego.",i:[
+["2022–2023","ARCC","Administración y monitoreo de proyectos · Autoridad para la Reconstrucción con Cambios"],
+["2021–2022","PSI · MIDAGRI","Administrador de contratos · Obras de irrigación por concurso oferta"],
+["2020–2021","PRONIS · MINSA","Administrador de contratos · Establecimientos de salud del Plan Integral para la Reconstrucción con Cambios"],
+["2019–2020","PRONIED · MINEDU","Formulador de proyectos e inspector técnico · Infraestructura educativa"],
+["2019","PSI · MINAGRI","Administrador de contratos · Oficina de supervisión"]]},
+{y:"2023–hoy",t:"Docencia y ANIN",h:"Enseñar y asegurar la calidad",p:"Llevé la experiencia al aula como catedrático de Ingeniería Civil y Arquitectura. Desde 2026 hago seguimiento de calidad y SSOMA en el proyecto del IREN Sur.",i:[
+["2026–hoy","ANIN","Seguimiento y monitoreo de calidad y SSOMA · Mejoramiento y ampliación del IREN Sur, Arequipa"],
+["2023–2026","Universidad Tecnológica del Perú","Catedrático · Ingeniería Civil y Arquitectura"],
+["2023","Universidad Nacional de San Agustín","Catedrático · Ingeniería Civil y Arquitectura"]]}];
+const projects=[
+["Salud","2026–hoy","IREN Sur Arequipa","Mejoramiento y ampliación del Instituto Regional de Enfermedades Neoplásicas.","ANIN · Seguimiento de calidad y SSOMA"],
+["Salud","2020–2021","Establecimientos de salud PIRCC","Obras de reconstrucción de establecimientos de salud, entre ellas el Centro de Salud Sapillica.","PRONIS · Administrador de contratos"],
+["Reconstrucción","2022–2023","Cartera de reconstrucción","Administración y monitoreo de proyectos de la Autoridad para la Reconstrucción con Cambios.","ARCC · Administración y monitoreo"],
+["Riego","2019–2022","Obras de irrigación","Evaluación de avances, valorizaciones y control de calidad en obras por concurso oferta.","PSI · Administrador de contratos"],
+["Educación","2019–2020","Infraestructura educativa","Formulación de proyectos de inversión e inspección de módulos prefabricados.","PRONIED · Formulador e inspector"],
+["Minería","2011–2013","Antapaccay · Expansión Tintaya","Water Management System: 26 km de pipeline de acero, estaciones relevadoras y salas eléctricas.","Bechtel–GyM · Oficina técnica y supervisor"],
+["Minería","2014","Proyecto Constancia","Obras civiles y electromecánicas para Hudbay Minerals en Chumbivilcas, Cusco.","Siemens · Ing. civil supervisor"],
+["Minería","2013","Cerro Verde · Filtro protector","Left Abutment Protective Filter, fase III: control técnico y de presupuesto.","CyM Vizcarra · Jefe de oficina técnica"],
+["Minería","2010–2011","Cerro Verde · Presa de relaves","Extensión de drenes fase III y reubicación del nido de ciclones.","Desprominc y G&T · Planeamiento y supervisión"],
+["Riego","2015–2016","Canales Katari y Bajo Katari","Mejoramiento de infraestructura de riego en Tiabaya para Sociedad Minera Cerro Verde.","B&B Murillo · Jefe de proyecto"],
+["Industria","2009–2010","Sider Perú · Horno eléctrico","Nuevo horno de 30 t, captación de humos y reforzamiento de estructuras en Chimbote.","SSK · Supervisor"],
+["Industria","2009","Shougang · San Nicolás III","Nuevos stocks y sistema de transferencia para embarque de mineral de hierro en Marcona.","SSK · Supervisor"],
+["Energía","2009","C.H. El Platanal","Construcción de la central hidroeléctrica en Cañete, Lima.","SSK · Supervisor"],
+["Edificación","2016–2018","Sedes de SENCICO","Mantenimiento y obras en Cusco, Piura, Chorrillos y San Borja.","Residente de obra"],
+["Edificación","2005–2007","Sedes de SUNAT y Aduanas","Mantenimiento de intendencias y puestos de control en cuatro regiones del sur.","ECHESA · Asistente de residente"]];
+const $=s=>document.querySelector(s),el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+// trayectoria
+const tl=$('.tabs'),panel=$('#panel');
+function show(k){[...tl.children].forEach((b,i)=>{b.setAttribute('aria-selected',i===k);b.tabIndex=i===k?0:-1});const s=stages[k];
+panel.innerHTML=`<div><div class="mono">${s.y}</div><h3 style="margin-top:8px">${s.h}</h3><p>${s.p}</p></div><ul>${s.i.map(r=>`<li><time>${r[0]}</time><div><b>${r[1]}</b><small>${r[2]}</small></div></li>`).join('')}</ul>`}
+stages.forEach((s,i)=>{const b=el('button','tab',`<b>${s.y}</b><span>${s.t}</span>`);b.setAttribute('role','tab');b.onclick=()=>show(i);
+b.onkeydown=e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){const n=(i+d+stages.length)%stages.length;show(n);tl.children[n].focus()}};tl.append(b)});
+show(3);
+// proyectos
+const pg=$('#projects'),fg=$('.filters'),cats=['Todos',...new Set(projects.map(p=>p[0]))];
+projects.forEach(p=>{const c=el('article','pj rv',`<div class="top"><span class="mono tag">${p[0]}</span><span class="mono">${p[1]}</span></div><h3>${p[2]}</h3><p>${p[3]}</p><div class="role">${p[4]}</div>`);c.dataset.c=p[0];pg.append(c)});
+cats.forEach((c,i)=>{const b=el('button','f',c);b.setAttribute('aria-pressed',i===0);b.onclick=()=>{[...fg.children].forEach(x=>x.setAttribute('aria-pressed',x===b));[...pg.children].forEach(x=>x.classList.toggle('hide',c!=='Todos'&&x.dataset.c!==c))};fg.append(b)});
+// reveal + counters
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.querySelectorAll('[data-n]').forEach(e=>{const n=+e.dataset.n;if(reduce){e.textContent=n;return}let t0;const f=t=>{t0??=t;const k=Math.min((t-t0)/1100,1);e.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+// nav activo
+const links=[...document.querySelectorAll('nav a.l')];
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>so.observe(s));
+// tema
+const root=document.documentElement;let th=null;try{th=localStorage.getItem('jc-theme')}catch(e){}
+if(!th&&matchMedia('(prefers-color-scheme:dark)').matches)th='dark';if(th)root.dataset.theme=th;
+$('#theme').onclick=()=>{const d=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=d;try{localStorage.setItem('jc-theme',d)}catch(e){}};
+$('#y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
