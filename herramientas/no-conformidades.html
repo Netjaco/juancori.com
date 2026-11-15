@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de no conformidades · Juan Cori</title>
+<meta name="description" content="Registro de no conformidades con acciones correctivas, responsables, fechas límite y alertas de vencimiento. Funciona en el navegador.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../">JUAN CORI<b>.</b></a><a class="back" href="../#herramientas">← Volver a herramientas</a></div></header>
+<main><div class="wrap">
+<div class="mono">Herramienta · Calidad</div>
+<h1>No conformidades</h1>
+<p class="intro">Registre hallazgos, asigne la acción correctiva y controle su cierre. Los datos se guardan solo en este navegador; exporte el CSV para respaldarlos o compartirlos.</p>
+
+<div class="kpis" aria-live="polite">
+<div class="kpi"><span class="mono">Total</span><b id="k-total">0</b></div>
+<div class="kpi"><span class="mono">Abiertas</span><b id="k-open">0</b></div>
+<div class="kpi"><span class="mono">Vencidas</span><b id="k-late" class="bad">0</b></div>
+<div class="kpi"><span class="mono">Cerradas</span><b id="k-closed" class="ok">0</b></div>
+<div class="kpi"><span class="mono">% cierre</span><b id="k-pct">—</b></div>
+</div>
+
+<form class="box" id="f" novalidate>
+<h2 id="ftitle">Nueva no conformidad</h2>
+<div class="fg" style="margin-top:16px">
+<div><label for="fecha">Fecha de detección</label><input id="fecha" type="date" required></div>
+<div><label for="origen">Origen</label><select id="origen"><option>Auditoría interna</option><option>Auditoría externa</option><option>Inspección de campo</option><option>Ensayo o prueba</option><option>Reclamo del cliente</option><option>Otro</option></select></div>
+<div><label for="tipo">Sistema</label><select id="tipo"><option>Calidad</option><option>Seguridad y salud</option><option>Medio ambiente</option></select></div>
+<div><label for="sev">Clasificación</label><select id="sev"><option>Mayor</option><option selected>Menor</option><option>Observación</option></select></div>
+<div class="full"><label for="desc">Descripción del hallazgo</label><textarea id="desc" required maxlength="600"></textarea></div>
+<div class="full"><label for="acc">Acción correctiva</label><textarea id="acc" maxlength="600"></textarea></div>
+<div><label for="resp">Responsable</label><input id="resp" type="text" maxlength="60"></div>
+<div><label for="lim">Fecha límite</label><input id="lim" type="date"></div>
+<div><label for="estado">Estado</label><select id="estado"><option>Abierta</option><option>En proceso</option><option>Cerrada</option></select></div>
+<div><label for="cierre">Fecha de cierre</label><input id="cierre" type="date"></div>
+</div>
+<div class="err" id="err" role="alert"></div>
+<div class="btns"><button class="p" type="submit" id="sub">Registrar</button><button type="button" id="cancel" hidden>Cancelar edición</button></div>
+</form>
+
+<div class="box">
+<div class="hrow"><h2>Registro</h2>
+<div class="btns noprint" style="margin:0"><select id="filtro" aria-label="Filtrar por estado" style="width:auto"><option value="">Todas</option><option>Abierta</option><option>En proceso</option><option>Cerrada</option><option value="late">Vencidas</option></select><button id="csv" type="button">Exportar CSV</button><button id="print" type="button">Imprimir</button></div></div>
+<p class="empty" id="empty">Aún no hay no conformidades registradas.</p>
+<div class="scroll"><table id="tb" hidden><thead><tr><th>Código</th><th>Detección</th><th>Clasif.</th><th>Hallazgo y acción</th><th>Responsable</th><th>Límite</th><th>Estado</th><th></th></tr></thead><tbody></tbody></table></div>
+</div>
+<p class="note">Una no conformidad se considera vencida cuando no está cerrada y su fecha límite ya pasó. El código se asigna de forma correlativa (NC-001, NC-002…).</p>
+</div></main>
+<script src="base.js"></script>
+<script>
+const {$,esc}=JC,KEY='jc-nc';let db=JC.load(KEY,{n:0,items:[]}),edit=null;
+const late=r=>r.estado!=='Cerrada'&&r.lim&&JC.parse(r.lim)<JC.today();
+function draw(){
+  const it=db.items,closed=it.filter(r=>r.estado==='Cerrada').length;
+  $('k-total').textContent=it.length;$('k-open').textContent=it.length-closed;$('k-late').textContent=it.filter(late).length;
+  $('k-closed').textContent=closed;$('k-pct').textContent=it.length?Math.round(closed/it.length*100)+'%':'—';
+  const f=$('filtro').value,rows=it.filter(r=>!f||(f==='late'?late(r):r.estado===f));
+  $('tb').hidden=!rows.length;$('empty').hidden=!!rows.length;
+  $('empty').textContent=it.length?'Ningún registro coincide con el filtro.':'Aún no hay no conformidades registradas.';
+  $('tb').tBodies[0].innerHTML=rows.map(r=>{
+    const l=late(r),cls=r.estado==='Cerrada'?'ok':l?'bad':r.estado==='En proceso'?'warn':'mut';
+    const lim=r.lim?JC.fmt(r.lim)+(l?`<br><small class="bad">${JC.days(JC.parse(r.lim),JC.today())} d de atraso</small>`:''):'—';
+    return `<tr><td><b>${esc(r.cod)}</b><br><small class="mut">${esc(r.tipo)}</small></td><td>${JC.fmt(r.fecha)}<br><small class="mut">${esc(r.origen)}</small></td><td>${esc(r.sev)}</td>
+    <td>${esc(r.desc)}${r.acc?`<br><small class="mut"><b>Acción:</b> ${esc(r.acc)}</small>`:''}</td><td>${esc(r.resp)||'—'}</td><td>${lim}</td>
+    <td><span class="tag ${cls}">${l?'Vencida':esc(r.estado)}</span>${r.cierre?`<br><small class="mut">${JC.fmt(r.cierre)}</small>`:''}</td>
+    <td class="noprint"><button class="x" data-e="${esc(r.cod)}" aria-label="Editar ${esc(r.cod)}">✎</button><button class="x" data-d="${esc(r.cod)}" aria-label="Eliminar ${esc(r.cod)}">×</button></td></tr>`}).join('');
+}
+function reset(){$('f').reset();$('fecha').value=JC.iso(JC.today());edit=null;$('ftitle').textContent='Nueva no conformidad';$('sub').textContent='Registrar';$('cancel').hidden=true;$('err').textContent=''}
+$('f').addEventListener('submit',e=>{e.preventDefault();
+  const r={};['fecha','origen','tipo','sev','desc','acc','resp','lim','estado','cierre'].forEach(k=>r[k]=$(k).value.trim());
+  if(!r.fecha||!r.desc){$('err').textContent='Indique la fecha de detección y la descripción del hallazgo.';return}
+  if(r.lim&&r.lim<r.fecha){$('err').textContent='La fecha límite no puede ser anterior a la detección.';return}
+  if(r.estado==='Cerrada'&&!r.cierre)r.cierre=JC.iso(JC.today());
+  if(r.estado!=='Cerrada')r.cierre='';
+  if(edit){Object.assign(db.items.find(x=>x.cod===edit),r)}else{db.n++;r.cod='NC-'+String(db.n).padStart(3,'0');db.items.push(r)}
+  JC.save(KEY,db);reset();draw()});
+$('cancel').onclick=reset;
+$('tb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.d){db.items=db.items.filter(x=>x.cod!==b.dataset.d);if(edit===b.dataset.d)reset();JC.save(KEY,db);draw()}
+  if(b.dataset.e){const r=db.items.find(x=>x.cod===b.dataset.e);edit=r.cod;['fecha','origen','tipo','sev','desc','acc','resp','lim','estado','cierre'].forEach(k=>$(k).value=r[k]||'');
+    $('ftitle').textContent='Editar '+r.cod;$('sub').textContent='Guardar cambios';$('cancel').hidden=false;$('f').scrollIntoView({behavior:'smooth'})}});
+$('filtro').onchange=draw;$('print').onclick=()=>print();
+$('csv').onclick=()=>{if(!db.items.length)return;JC.csv('no-conformidades.csv',[['Código','Detección','Origen','Sistema','Clasificación','Hallazgo','Acción correctiva','Responsable','Fecha límite','Estado','Fecha de cierre','Vencida'],
+  ...db.items.map(r=>[r.cod,r.fecha,r.origen,r.tipo,r.sev,r.desc,r.acc,r.resp,r.lim,r.estado,r.cierre,late(r)?'Sí':'No'])])};
+reset();draw();
+</script>
+</body>
+</html>

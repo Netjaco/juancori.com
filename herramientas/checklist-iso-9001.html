@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist ISO 9001:2015 · Juan Cori</title>
+<meta name="description" content="Lista de verificación de auditoría interna por cláusula de ISO 9001:2015, con porcentaje de conformidad, notas de evidencia y exportación.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+.sec{margin:0 0 22px;border:1px solid var(--line);background:var(--card)}
+.sec>summary{cursor:pointer;padding:16px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center;font:700 18px Archivo,sans-serif;list-style:none}
+.sec>summary::-webkit-details-marker{display:none}
+.it{display:grid;grid-template-columns:54px 1fr 250px;gap:14px;padding:14px 20px;border-top:1px solid var(--line);align-items:start}
+.it .n{font:500 13px "IBM Plex Mono",monospace;color:var(--accent);padding-top:2px}
+.it p{margin:0 0 8px;font-size:15px}.it b{font-weight:600}
+.it input{font-size:14px;padding:7px 9px}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--line)}
+.opts label{margin:0;text-align:center;padding:8px 2px;font:500 12px "IBM Plex Mono",monospace;cursor:pointer;border-left:1px solid var(--line)}
+.opts label:first-child{border-left:0}
+.opts input{position:absolute;opacity:0;width:0}
+.opts input:checked+span{font-weight:700}
+.opts label:has(input:checked){background:var(--ink);color:var(--paper)}
+.opts label:has(input:focus-visible){outline:2px solid var(--accent)}
+.bar{height:8px;background:var(--paper2);border:1px solid var(--line);margin-top:10px}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+@media(max-width:760px){.it{grid-template-columns:44px 1fr}.it .opts{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../">JUAN CORI<b>.</b></a><a class="back" href="../#herramientas">← Volver a herramientas</a></div></header>
+<main><div class="wrap">
+<div class="mono">Herramienta · Calidad</div>
+<h1>Checklist ISO 9001:2015</h1>
+<p class="intro">Lista de verificación para auditoría interna, organizada por cláusula. Marque el resultado de cada punto y anote la evidencia. El avance se guarda solo en este navegador.</p>
+
+<div class="box">
+<div class="fg">
+<div class="w2"><label for="org">Organización o proceso auditado</label><input id="org" type="text" maxlength="80"></div>
+<div><label for="aud">Auditor</label><input id="aud" type="text" maxlength="60"></div>
+<div><label for="fec">Fecha</label><input id="fec" type="date"></div>
+</div>
+</div>
+
+<div class="kpis" aria-live="polite">
+<div class="kpi"><span class="mono">Evaluados</span><b id="k-ev">0</b></div>
+<div class="kpi"><span class="mono">Conformes</span><b id="k-c" class="ok">0</b></div>
+<div class="kpi"><span class="mono">No conformes</span><b id="k-nc" class="bad">0</b></div>
+<div class="kpi"><span class="mono">Observaciones</span><b id="k-ob" class="warn">0</b></div>
+<div class="kpi"><span class="mono">% conformidad</span><b id="k-pct">—</b><div class="bar"><i id="bar"></i></div></div>
+</div>
+
+<div id="list"></div>
+<div class="btns noprint"><button class="p" id="csv" type="button">Exportar CSV</button><button id="print" type="button">Imprimir</button><button id="clr" type="button">Reiniciar checklist</button></div>
+<p class="note">C = conforme · NC = no conforme · OBS = observación u oportunidad de mejora · NA = no aplica. El porcentaje de conformidad se calcula sobre los puntos evaluados, sin contar los «no aplica». Las preguntas son una guía propia de verificación y no reproducen el texto de la norma; la auditoría debe realizarse contra los requisitos de ISO 9001:2015.</p>
+</div></main>
+<script src="base.js"></script>
+<script>
+const {$,esc}=JC,KEY='jc-iso9001';
+const S=[["4","Contexto de la organización",[
+["4.1","¿Se han identificado y se revisan las cuestiones internas y externas que afectan al sistema de gestión?"],
+["4.2","¿Están determinadas las partes interesadas pertinentes y sus requisitos?"],
+["4.3","¿El alcance del sistema está definido, documentado y disponible?"],
+["4.4","¿Los procesos están identificados, con sus entradas, salidas, responsables e indicadores?"]]],
+["5","Liderazgo",[
+["5.1","¿La alta dirección demuestra compromiso con el sistema y con el enfoque al cliente?"],
+["5.2","¿Existe una política de calidad vigente, comunicada y entendida por el personal?"],
+["5.3","¿Los roles, responsabilidades y autoridades están asignados y son conocidos?"]]],
+["6","Planificación",[
+["6.1","¿Se identifican riesgos y oportunidades y se planifican acciones para abordarlos?"],
+["6.2","¿Hay objetivos de calidad medibles, con responsables, plazos y seguimiento?"],
+["6.3","¿Los cambios al sistema se realizan de manera planificada?"]]],
+["7","Apoyo",[
+["7.1","¿Se proporcionan los recursos, la infraestructura y los equipos de medición calibrados necesarios?"],
+["7.2","¿Se determina y evidencia la competencia del personal que afecta a la calidad?"],
+["7.3","¿El personal conoce la política, los objetivos y su contribución al sistema?"],
+["7.4","¿Están definidas las comunicaciones internas y externas pertinentes?"],
+["7.5","¿La información documentada está controlada: versión vigente, aprobación, acceso y conservación?"]]],
+["8","Operación",[
+["8.1","¿Los procesos operativos se planifican y controlan según criterios definidos?"],
+["8.2","¿Se determinan y revisan los requisitos del cliente antes de comprometerse a cumplirlos?"],
+["8.3","¿El diseño y desarrollo, cuando aplica, se controla con revisiones, verificación y validación?"],
+["8.4","¿Los proveedores y subcontratistas se evalúan, seleccionan y controlan?"],
+["8.5","¿La ejecución se realiza en condiciones controladas, con identificación, trazabilidad y preservación?"],
+["8.6","¿La liberación de productos o servicios se hace tras verificar el cumplimiento, con registro de quien autoriza?"],
+["8.7","¿Las salidas no conformes se identifican, controlan y registran?"]]],
+["9","Evaluación del desempeño",[
+["9.1","¿Se hace seguimiento, medición y análisis de los procesos y de la satisfacción del cliente?"],
+["9.2","¿Se ejecuta un programa de auditorías internas con auditores imparciales y resultados informados?"],
+["9.3","¿La dirección revisa el sistema a intervalos planificados y deja registro de las decisiones?"]]],
+["10","Mejora",[
+["10.1","¿Se identifican e implementan oportunidades de mejora?"],
+["10.2","¿Las no conformidades se tratan con análisis de causa, acción correctiva y verificación de eficacia?"],
+["10.3","¿Hay evidencia de mejora continua del sistema?"]]]];
+const OPT=[['C','Conforme'],['NC','No conforme'],['OBS','Observación'],['NA','No aplica']];
+let st=JC.load(KEY,{meta:{},r:{}});
+$('list').innerHTML=S.map(([n,t,items])=>`<details class="sec" open><summary><span>${n} · ${t}</span><span class="mono" data-sec="${n}"></span></summary>${items.map(([c,q])=>`
+<div class="it"><div class="n">${c}</div><div><p>${q}</p><input type="text" data-note="${c}" placeholder="Evidencia u observación" aria-label="Evidencia del punto ${c}" maxlength="300" value="${esc(st.r[c]?.n||'')}"></div>
+<div class="opts" role="radiogroup" aria-label="Resultado del punto ${c}">${OPT.map(([v,l])=>`<label title="${l}"><input type="radio" name="r${c}" value="${v}" ${st.r[c]?.v===v?'checked':''}><span>${v}</span></label>`).join('')}</div></div>`).join('')}</details>`).join('');
+['org','aud','fec'].forEach(k=>{$(k).value=st.meta[k]||(k==='fec'?JC.iso(JC.today()):'');$(k).addEventListener('input',()=>{st.meta[k]=$(k).value;JC.save(KEY,st)})});
+function kp(){const v=Object.values(st.r).map(x=>x.v).filter(Boolean),c=v.filter(x=>x==='C').length,nc=v.filter(x=>x==='NC').length,ob=v.filter(x=>x==='OBS').length,ap=c+nc+ob;
+  $('k-ev').textContent=v.length+' / '+S.reduce((a,s)=>a+s[2].length,0);$('k-c').textContent=c;$('k-nc').textContent=nc;$('k-ob').textContent=ob;
+  $('k-pct').textContent=ap?Math.round(c/ap*100)+'%':'—';$('bar').style.width=(ap?c/ap*100:0)+'%';
+  S.forEach(([n,,items])=>{const d=items.filter(([c])=>st.r[c]?.v).length;document.querySelector(`[data-sec="${n}"]`).textContent=d+' / '+items.length})}
+$('list').addEventListener('change',e=>{if(e.target.type==='radio'){const c=e.target.name.slice(1);(st.r[c]??={}).v=e.target.value;JC.save(KEY,st);kp()}});
+$('list').addEventListener('input',e=>{const c=e.target.dataset.note;if(c){(st.r[c]??={}).n=e.target.value;JC.save(KEY,st)}});
+$('print').onclick=()=>print();
+$('clr').onclick=()=>{st={meta:{},r:{}};JC.save(KEY,st);location.reload()};
+$('csv').onclick=()=>JC.csv('checklist-iso-9001.csv',[['Organización',st.meta.org||''],['Auditor',st.meta.aud||''],['Fecha',$('fec').value],[],['Cláusula','Punto de verificación','Resultado','Evidencia'],
+  ...S.flatMap(s=>s[2].map(([c,q])=>[c,q,(OPT.find(o=>o[0]===st.r[c]?.v)||[,''])[1],st.r[c]?.n||'']))]);
+kp();
+</script>
+</body>
+</html>

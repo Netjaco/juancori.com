@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matriz IPERC · Juan Cori</title>
+<meta name="description" content="Matriz IPERC con evaluación de riesgo inicial y residual. Dos métodos: índices de probabilidad y severidad (R.M. 050-2013-TR) y matriz 5×5 (D.S. 024-2016-EM).">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+.ev{border:1px solid var(--line);padding:16px;background:var(--paper)}
+.ev h3{font:700 15px Archivo,sans-serif;margin:0 0 12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.res{margin-top:12px;display:flex;align-items:center;gap:10px;font-size:14px}
+.lv{display:inline-block;font:600 12.5px "IBM Plex Mono",monospace;padding:4px 10px;color:#fff;white-space:nowrap}
+.l1{background:#2b8a3e}.l2{background:#5c940d}.l3{background:#e67700}.l4{background:#d9480f}.l5{background:#c92a2a}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../">JUAN CORI<b>.</b></a><a class="back" href="../#herramientas">← Volver a herramientas</a></div></header>
+<main><div class="wrap">
+<div class="mono">Herramienta · SSOMA</div>
+<h1>Matriz IPERC</h1>
+<p class="intro">Identifique el peligro, evalúe el riesgo inicial, registre los controles y evalúe el riesgo residual. El nivel se calcula automáticamente. Los datos se guardan solo en este navegador.</p>
+
+<div class="box">
+<label for="met">Método de evaluación</label>
+<select id="met" style="max-width:560px"><option value="tr">Índices de probabilidad × severidad · R.M. 050-2013-TR (construcción y general)</option><option value="em">Matriz 5×5 severidad–frecuencia · D.S. 024-2016-EM (minería)</option></select>
+<p class="mut" id="metnote" style="font-size:13.5px;margin:10px 0 0"></p>
+</div>
+
+<form class="box" id="f" novalidate>
+<h2>Nuevo riesgo</h2>
+<div class="fg" style="margin-top:16px">
+<div class="w2"><label for="act">Actividad o tarea</label><input id="act" type="text" maxlength="100" required></div>
+<div class="w2"><label for="pel">Peligro</label><input id="pel" type="text" maxlength="120" required></div>
+<div class="full"><label for="rie">Riesgo o consecuencia</label><input id="rie" type="text" maxlength="160"></div>
+</div>
+<div class="two">
+<div class="ev"><h3>Evaluación inicial</h3><div class="fg" id="e0"></div><div class="res"><span>Riesgo:</span><span id="r0"></span></div></div>
+<div class="ev"><h3>Evaluación residual, con controles</h3><div class="fg" id="e1"></div><div class="res"><span>Riesgo:</span><span id="r1"></span></div></div>
+</div>
+<div style="margin-top:16px"><label for="ctl">Medidas de control (eliminación, sustitución, ingeniería, administrativas, EPP)</label><textarea id="ctl" maxlength="500"></textarea></div>
+<div class="err" id="err" role="alert"></div>
+<div class="btns"><button class="p" type="submit">Agregar a la matriz</button></div>
+</form>
+
+<div class="box">
+<div class="hrow"><h2>Matriz</h2><div class="btns noprint" style="margin:0"><button id="csv" type="button">Exportar CSV</button><button id="print" type="button">Imprimir</button><button id="clr" type="button">Vaciar matriz</button></div></div>
+<p class="empty" id="empty">Aún no hay riesgos evaluados.</p>
+<div class="scroll"><table id="tb" hidden><thead><tr><th>#</th><th>Actividad</th><th>Peligro y riesgo</th><th>Inicial</th><th>Controles</th><th>Residual</th><th></th></tr></thead><tbody></tbody></table></div>
+</div>
+<p class="note">Esta herramienta aplica los criterios de valoración de cada método tal como se usan habitualmente en el Perú; el procedimiento IPERC de su proyecto puede fijar criterios propios. La evaluación debe ser realizada y validada por personal competente con participación de los trabajadores.</p>
+</div></main>
+<script src="base.js"></script>
+<script>
+const {$,esc}=JC,KEY='jc-iperc';
+const TR=[["pe","Personas expuestas",["1 · De 1 a 3","2 · De 4 a 12","3 · Más de 12"]],
+["pr","Procedimientos",["1 · Existen, son satisfactorios y suficientes","2 · Existen parcialmente o no son suficientes","3 · No existen"]],
+["ca","Capacitación",["1 · Personal entrenado, conoce el peligro y lo previene","2 · Parcialmente entrenado, no toma acciones de control","3 · No entrenado, no conoce el peligro"]],
+["ex","Exposición al riesgo",["1 · Al menos una vez al año","2 · Al menos una vez al mes","3 · Al menos una vez al día"]],
+["se","Severidad",["1 · Lesión sin incapacidad","2 · Lesión con incapacidad temporal","3 · Lesión con incapacidad permanente"]]];
+const EM=[["se","Severidad",["1 · Catastrófico","2 · Mortalidad","3 · Permanente","4 · Temporal","5 · Menor"]],
+["fr","Frecuencia",["A · Común","B · Ha sucedido","C · Podría suceder","D · Raro que suceda","E · Prácticamente imposible"]]];
+const MX=[[1,2,4,7,11],[3,5,8,12,16],[6,9,13,17,20],[10,14,18,21,23],[15,19,22,24,25]];
+const NOTE={tr:'Probabilidad = suma de los cuatro índices (4 a 12). Riesgo = probabilidad × severidad: 4 trivial · 5–8 tolerable · 9–16 moderado · 17–24 importante · 25–36 intolerable.',
+em:'El valor se lee de la matriz 5×5 (1 a 25): 1–8 alto · 9–15 medio · 16–25 bajo. Un número menor indica mayor riesgo.'};
+let db=JC.load(KEY,{met:'tr',items:[]});
+const defs=()=>db.met==='tr'?TR:EM;
+function score(m,v){
+  if(m==='tr'){const p=v.pe+v.pr+v.ca+v.ex,r=p*v.se;const [n,c]=r<=4?['Trivial','l1']:r<=8?['Tolerable','l2']:r<=16?['Moderado','l3']:r<=24?['Importante','l4']:['Intolerable','l5'];return{val:r,name:n,cls:c,txt:`P ${p} × S ${v.se} = ${r}`}}
+  const r=MX[v.se-1][v.fr-1];const [n,c]=r<=8?['Alto','l5']:r<=15?['Medio','l3']:['Bajo','l1'];return{val:r,name:n,cls:c,txt:`${v.se}${'ABCDE'[v.fr-1]} = ${r}`}}
+const badge=s=>`<span class="lv ${s.cls}">${s.name} · ${s.val}</span>`;
+function read(i){const v={};defs().forEach(([k])=>v[k]=+$(k+i).value);return v}
+function upd(){[0,1].forEach(i=>{const s=score(db.met,read(i));$('r'+i).innerHTML=badge(s)+` <small class="mut">${s.txt}</small>`})}
+function build(){$('met').value=db.met;$('metnote').textContent=NOTE[db.met];
+  [0,1].forEach(i=>{$('e'+i).innerHTML=defs().map(([k,l,o])=>`<div class="full"><label for="${k+i}">${l}</label><select id="${k+i}">${o.map((t,j)=>`<option value="${j+1}">${t}</option>`).join('')}</select></div>`).join('');
+    defs().forEach(([k,,o])=>{$(k+i).value=i===0?Math.min(2,o.length):(db.met==='em'&&k==='fr'?4:(db.met==='em'?2:1));$(k+i).onchange=upd})});upd();draw()}
+function draw(){const it=db.items;$('tb').hidden=!it.length;$('empty').hidden=!!it.length;
+  $('tb').tBodies[0].innerHTML=it.map((r,i)=>{const a=score(db.met,r.v0),b=score(db.met,r.v1);
+    return `<tr><td>${i+1}</td><td>${esc(r.act)}</td><td><b>${esc(r.pel)}</b>${r.rie?'<br><small class="mut">'+esc(r.rie)+'</small>':''}</td><td>${badge(a)}<br><small class="mut">${a.txt}</small></td><td>${esc(r.ctl)||'—'}</td><td>${badge(b)}<br><small class="mut">${b.txt}</small></td><td class="noprint"><button class="x" data-d="${i}" aria-label="Eliminar riesgo ${i+1}">×</button></td></tr>`}).join('')}
+$('met').onchange=()=>{const m=$('met').value;if(m===db.met)return;
+  if(db.items.length){$('err').textContent='Vacíe la matriz antes de cambiar de método: los riesgos ya evaluados usan el método actual.';$('met').value=db.met;return}
+  db.met=m;JC.save(KEY,db);build()};
+$('f').addEventListener('submit',e=>{e.preventDefault();const act=$('act').value.trim(),pel=$('pel').value.trim();
+  if(!act||!pel){$('err').textContent='Indique la actividad y el peligro.';return}$('err').textContent='';
+  db.items.push({act,pel,rie:$('rie').value.trim(),ctl:$('ctl').value.trim(),v0:read(0),v1:read(1)});JC.save(KEY,db);
+  ['pel','rie','ctl'].forEach(k=>$(k).value='');draw();$('pel').focus()});
+$('tb').addEventListener('click',e=>{const b=e.target.closest('button[data-d]');if(b){db.items.splice(b.dataset.d,1);JC.save(KEY,db);draw()}});
+$('clr').onclick=()=>{db.items=[];JC.save(KEY,db);$('err').textContent='';draw()};
+$('print').onclick=()=>print();
+$('csv').onclick=()=>{if(!db.items.length)return;JC.csv('matriz-iperc.csv',[['Método',db.met==='tr'?'R.M. 050-2013-TR':'D.S. 024-2016-EM'],[],['N.º','Actividad','Peligro','Riesgo','Valor inicial','Nivel inicial','Controles','Valor residual','Nivel residual'],
+  ...db.items.map((r,i)=>{const a=score(db.met,r.v0),b=score(db.met,r.v1);return[i+1,r.act,r.pel,r.rie,a.val,a.name,r.ctl,b.val,b.name]})])};
+build();
+</script>
+</body>
+</html>

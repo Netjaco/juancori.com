@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plazos NEC4 · Juan Cori</title>
+<meta name="description" content="Calculadora de fechas límite de notificación y respuesta según los periodos estándar del contrato NEC4 ECC, con seguimiento de vencimientos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>.due{font:800 clamp(26px,4vw,40px)/1.1 Archivo,sans-serif;font-stretch:84%;margin:6px 0}</style>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../">JUAN CORI<b>.</b></a><a class="back" href="../#herramientas">← Volver a herramientas</a></div></header>
+<main><div class="wrap">
+<div class="mono">Herramienta · Contratos</div>
+<h1>Plazos NEC4</h1>
+<p class="intro">Elija el tipo de plazo y la fecha de inicio para obtener la fecha límite. Puede guardar cada plazo en una lista de seguimiento, que se conserva solo en este navegador.</p>
+
+<form class="box" id="f" novalidate>
+<div class="fg">
+<div class="w2"><label for="regla">Tipo de plazo</label><select id="regla"></select></div>
+<div><label for="ini">Fecha de inicio</label><input id="ini" type="date"></div>
+<div><label for="sem">Semanas</label><input id="sem" type="number" min="0" step="1" inputmode="numeric"></div>
+<div class="full"><label for="ref">Referencia (opcional)</label><input id="ref" type="text" maxlength="80" placeholder="p. ej. EC-014 · Cambio en el alcance"></div>
+</div>
+<p class="mut" id="desde" style="margin:14px 0 0;font-size:14px"></p>
+<div style="margin-top:16px"><span class="mono">Fecha límite</span><div class="due" id="due">—</div><div id="left" class="mut" style="font-size:14px"></div></div>
+<div class="err" id="err" role="alert"></div>
+<div class="btns"><button class="p" type="submit">Guardar en seguimiento</button></div>
+</form>
+
+<div class="box">
+<div class="hrow"><h2>Seguimiento</h2><div class="btns noprint" style="margin:0"><button id="csv" type="button">Exportar CSV</button><button id="clr" type="button">Quitar atendidos</button></div></div>
+<p class="empty" id="empty">Aún no hay plazos en seguimiento.</p>
+<div class="scroll"><table id="tb" hidden><thead><tr><th>Vence</th><th>Plazo</th><th>Referencia</th><th>Inicio</th><th>Estado</th><th></th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<p class="note"><b>Importante.</b> Los periodos por defecto corresponden al NEC4 Engineering and Construction Contract (ECC) sin modificaciones. Los datos del contrato y las cláusulas Z de cada proyecto pueden cambiarlos, y otros contratos de la familia NEC4 usan periodos distintos, por lo que el campo «Semanas» es editable. Una semana se cuenta como siete días calendario. Verifique siempre contra su contrato: esta herramienta es una ayuda de cálculo y no constituye asesoría contractual.</p>
+</div></main>
+<script src="base.js"></script>
+<script>
+const {$,esc}=JC,KEY='jc-nec4';
+const R=[
+["Notificar un evento compensable (Contratista)","61.3",8,"desde que el Contratista toma conocimiento de que el evento ocurrió"],
+["Respuesta del Project Manager a la notificación del evento","61.4",1,"desde la notificación del Contratista"],
+["Aceptación tácita del evento tras aviso de falta de respuesta","61.4",2,"desde el aviso del Contratista por la falta de respuesta"],
+["Presentar la cotización del evento compensable","62.3",3,"desde la instrucción de presentar cotización"],
+["Respuesta del Project Manager a la cotización","62.3",2,"desde la presentación de la cotización"],
+["Aceptación tácita de la cotización tras aviso de falta de respuesta","62.6",2,"desde el aviso del Contratista por la falta de respuesta"],
+["Aceptación o no aceptación del programa","31.3",2,"desde la presentación del programa"],
+["Aceptación tácita del programa tras aviso de falta de respuesta","31.3",1,"desde el aviso del Contratista por la falta de respuesta"],
+["Certificación del pago","51.1",1,"desde la fecha de evaluación"],
+["Pago del monto certificado","51.2",3,"desde la fecha de evaluación, salvo otro periodo en los datos del contrato"],
+["Evaluación final del monto adeudado","53.1",4,"desde la emisión del Certificado de Defectos"],
+["Periodo de respuesta general (datos del contrato)","13.3",2,"desde la recepción de la comunicación; ingrese el periodo de su contrato"],
+["Plazo personalizado","—",1,"desde la fecha que usted indique"]];
+let list=JC.load(KEY,[]);
+R.forEach((r,i)=>$('regla').add(new Option(r[0]+(r[1]!=='—'?' · cl. '+r[1]:''),i)));
+function calc(){const r=R[$('regla').value],d=JC.parse($('ini').value),w=+$('sem').value;
+  $('desde').textContent='Se cuenta '+r[3]+'.';
+  if(!d||!(w>=0)||!Number.isInteger(w)){$('due').textContent='—';$('left').textContent='';return null}
+  const due=JC.addDays(d,w*7),n=JC.days(JC.today(),due);
+  $('due').textContent=due.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  $('left').textContent=n>0?`Faltan ${n} día${n===1?'':'s'}.`:n===0?'Vence hoy.':`Venció hace ${-n} día${n===-1?'':'s'}.`;
+  $('left').className=n<0?'bad':n<=3?'warn':'mut';return{due:JC.iso(due)}}
+$('regla').onchange=()=>{$('sem').value=R[$('regla').value][2];calc()};
+['ini','sem'].forEach(k=>$(k).addEventListener('input',()=>{$('err').textContent='';calc()}));
+function draw(){list.sort((a,b)=>a.done-b.done||a.due.localeCompare(b.due));
+  $('tb').hidden=!list.length;$('empty').hidden=!!list.length;
+  $('tb').tBodies[0].innerHTML=list.map((p,i)=>{const n=JC.days(JC.today(),JC.parse(p.due));
+    const [c,t]=p.done?['ok','Atendido']:n<0?['bad',`Vencido ${-n} d`]:n===0?['warn','Vence hoy']:n<=3?['warn',`${n} d`]:['mut',`${n} d`];
+    return `<tr><td><b>${JC.fmt(p.due)}</b></td><td>${esc(p.name)}<br><small class="mut">${p.cl!=='—'?'cl. '+esc(p.cl)+' · ':''}${p.w} sem.</small></td><td>${esc(p.ref)||'—'}</td><td>${JC.fmt(p.ini)}</td>
+    <td><span class="tag ${c}">${t}</span></td><td class="noprint" style="white-space:nowrap"><button class="x" data-t="${i}" aria-label="Marcar como ${p.done?'pendiente':'atendido'}">${p.done?'↺':'✓'}</button><button class="x" data-d="${i}" aria-label="Eliminar plazo">×</button></td></tr>`}).join('')}
+$('f').addEventListener('submit',e=>{e.preventDefault();const c=calc();
+  if(!c){$('err').textContent='Indique la fecha de inicio y un número entero de semanas.';return}
+  const r=R[$('regla').value];list.push({name:r[0],cl:r[1],w:+$('sem').value,ini:$('ini').value,due:c.due,ref:$('ref').value.trim(),done:false});
+  JC.save(KEY,list);$('ref').value='';draw()});
+$('tb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.t!=null)list[b.dataset.t].done=!list[b.dataset.t].done;if(b.dataset.d!=null)list.splice(b.dataset.d,1);JC.save(KEY,list);draw()});
+$('clr').onclick=()=>{list=list.filter(p=>!p.done);JC.save(KEY,list);draw()};
+$('csv').onclick=()=>{if(list.length)JC.csv('plazos-nec4.csv',[['Vence','Plazo','Cláusula','Semanas','Inicio','Referencia','Atendido'],...list.map(p=>[p.due,p.name,p.cl,p.w,p.ini,p.ref,p.done?'Sí':'No'])])};
+$('ini').value=JC.iso(JC.today());$('sem').value=R[0][2];calc();draw();
+</script>
+</body>
+</html>
