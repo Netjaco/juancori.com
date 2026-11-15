@@ -8,6 +8,7 @@
 <meta property="og:title" content="Juan Cori · Ingeniero Civil">
 <meta property="og:description" content="Calidad, SSOMA y gestión de contratos en infraestructura pública. Más de 20 años entre minería, obra y Estado.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://www.juancori.com/img/iren-sur-aerea-1.jpg">
 <meta property="og:url" content="https://www.juancori.com/">
 <link rel="canonical" href="https://www.juancori.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2314202b'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%23f4f1ea'%3EJC%3C/text%3E%3Crect x='12' y='50' width='40' height='4' fill='%23e8590c'/%3E%3C/svg%3E">
@@ -38,7 +39,13 @@ nav a.l:hover,nav a.l.on{color:var(--ink);border-color:var(--accent)}
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
 .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.45;mask-image:linear-gradient(100deg,transparent 35%,#000 100%)}
 .hero .wrap{position:relative;padding-top:clamp(56px,9vw,110px);padding-bottom:clamp(48px,7vw,84px)}
-.hero h1{font-size:clamp(44px,8.6vw,112px);font-weight:800;font-stretch:78%;letter-spacing:-.02em;text-transform:uppercase;margin:18px 0 22px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:52px;align-items:end}
+.portrait{position:relative;margin:0}
+.portrait::before{content:"";position:absolute;inset:14px -14px -14px 14px;background:var(--accent)}
+.portrait img{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border:1.5px solid var(--ink)}
+.portrait figcaption{position:relative;margin-top:24px}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.portrait{max-width:260px;margin-right:14px}}
+.hero h1{font-size:clamp(38px,5vw,64px);font-weight:800;font-stretch:78%;letter-spacing:-.02em;text-transform:uppercase;margin:18px 0 22px}
 .hero h1 span{display:block}
 .hero h1 .a{color:var(--accent)}
 .lead{max-width:640px;font-size:clamp(17px,1.9vw,21px);color:var(--ink2)}
@@ -62,6 +69,15 @@ section{padding:clamp(60px,8vw,104px) 0;border-bottom:1px solid var(--line)}
 .head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
 .head p{max-width:460px;margin:0;color:var(--ink2);font-size:16px}
 .num{color:var(--accent)}
+/* obra */
+.obra{display:grid;grid-template-columns:1.7fr 1fr;gap:14px}
+.obra figure{margin:0;position:relative;overflow:hidden;border:1px solid var(--line);background:var(--paper2)}
+.obra img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.obra figure:hover img{transform:scale(1.04)}
+.obra figcaption{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--paper);font:500 12px "IBM Plex Mono",monospace;letter-spacing:.06em;padding:7px 12px}
+.obra .col{display:grid;gap:14px;grid-template-rows:1fr 1fr}
+.obra .main{aspect-ratio:4/3}
+@media(max-width:760px){.obra{grid-template-columns:1fr}.obra .col{grid-template-rows:auto}.obra .col figure{aspect-ratio:4/3}}
 /* especialidades */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
 .cell{background:var(--paper);padding:28px 26px;transition:background .2s}
@@ -114,12 +130,12 @@ section{padding:clamp(60px,8vw,104px) 0;border-bottom:1px solid var(--line)}
 .sub{margin:0 0 14px}
 @media(max-width:860px){.two{grid-template-columns:1fr}}
 /* herramientas */
-.tools{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .tool{border:1px solid var(--line);padding:24px;background:var(--card);text-decoration:none;display:flex;flex-direction:column;gap:10px}
-.tool.live{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.tool.live p{color:color-mix(in srgb,var(--paper) 72%,transparent)}
-.tool.live .mono{color:var(--accent)}
-.tool.live:hover{box-shadow:6px 6px 0 var(--accent);transform:translate(-3px,-3px)}
+.tool .mono{color:var(--accent)}
+.tool:hover{box-shadow:6px 6px 0 var(--accent);transform:translate(-3px,-3px);border-color:var(--ink)}
+.tool:first-child{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tool:first-child p{color:color-mix(in srgb,var(--paper) 72%,transparent)}
 .tool{transition:transform .2s,box-shadow .2s}
 .tool p{margin:0;font-size:15px;color:var(--ink2)}
 .tool .go{margin-top:auto;font-weight:600}
@@ -151,11 +167,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </nav></div></header>
 
 <main>
-<div class="hero" id="inicio"><div class="wrap">
+<div class="hero" id="inicio"><div class="wrap"><div>
 <span class="now"><i></i>Hoy: Calidad y SSOMA en el IREN Sur · ANIN, Arequipa</span>
 <h1><span>Ingeniería civil</span><span class="a">que se controla,</span><span>se mide y se entrega.</span></h1>
 <p class="lead">Soy <strong>Juan Cori</strong>, ingeniero civil (CIP 91864) y magíster en Administración Estratégica de Empresas. Llevo más de veinte años entre <strong>obra, oficina técnica en gran minería y administración de contratos del Estado</strong>. Hoy hago seguimiento de calidad y SSOMA en infraestructura hospitalaria.</p>
 <div class="cta"><a class="btn p" href="#trayectoria">Ver trayectoria</a><a class="btn" href="#contacto">Contactar</a></div>
+</div>
+<figure class="portrait"><img src="img/juan-cori.jpg" width="720" height="900" alt="Retrato de Juan Cori, ingeniero civil"><figcaption class="mono">Ing. Juan Cori · CIP 91864</figcaption></figure>
 </div></div>
 
 <div class="wrap"><div class="stats">
@@ -164,6 +182,17 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 <div class="stat"><b data-n="7">0</b><span>operaciones mineras e industriales</span></div>
 <div class="stat"><b data-n="9">0</b><span>regiones del Perú con obra ejecutada o supervisada</span></div>
 </div></div>
+
+<section id="ahora"><div class="wrap">
+<div class="head rv"><div><div class="mono"><span class="num">00</span> — Ahora</div><h2>IREN Sur, Arequipa</h2></div><p>Mejoramiento y ampliación del Instituto Regional de Enfermedades Neoplásicas del Sur. Desde la ANIN hago el seguimiento y monitoreo de la gestión de calidad y SSOMA de la obra.</p></div>
+<div class="obra rv">
+<figure class="main"><img src="img/iren-sur-aerea-1.jpg" width="1600" height="1200" loading="lazy" alt="Vista aérea de la obra de contingencia del IREN Sur con la ciudad de Arequipa al fondo"><figcaption>Obra de contingencia · vista aérea, 2026</figcaption></figure>
+<div class="col">
+<figure><img src="img/juan-cori-obra.jpg" width="1400" height="1050" loading="lazy" alt="Juan Cori con casco y chaleco de la ANIN en la obra del IREN Sur"><figcaption>En obra · agosto 2026</figcaption></figure>
+<figure><img src="img/iren-sur-aerea-2.jpg" width="1600" height="1200" loading="lazy" alt="Vista aérea del conjunto del IREN Sur con el volcán Misti al fondo"><figcaption>Emplazamiento · Arequipa</figcaption></figure>
+</div>
+</div>
+</div></section>
 
 <section id="especialidades"><div class="wrap">
 <div class="head rv"><div><div class="mono"><span class="num">01</span> — Especialidades</div><h2>En qué puedo aportar</h2></div><p>Tres frentes que he ejercido desde ambos lados de la mesa: como contratista y como entidad.</p></div>
@@ -214,11 +243,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </div></section>
 
 <section id="herramientas"><div class="wrap">
-<div class="head rv"><div><div class="mono"><span class="num">05</span> — Herramientas</div><h2>Utilidades de trabajo</h2></div><p>Pequeñas aplicaciones que uso en el día a día y que comparto. Funcionan en el navegador y no envían datos a ningún servidor.</p></div>
+<div class="head rv"><div><div class="mono"><span class="num">05</span> — Herramientas</div><h2>Utilidades de trabajo</h2></div><p>Pequeñas aplicaciones para el trabajo diario. Funcionan en el navegador: los datos se guardan solo en su equipo y no se envían a ningún servidor.</p></div>
 <div class="tools rv">
-<a class="tool live" href="herramientas/indices-seguridad/"><div class="mono">Disponible · SSOMA</div><h3>Índices de seguridad</h3><p>Calcula los índices de frecuencia, severidad y accidentabilidad a partir de accidentes, días perdidos y horas-hombre trabajadas. Guarda el historial y lo exporta.</p><span class="go">Abrir herramienta →</span></a>
-<div class="tool soon"><div class="mono">En preparación · Calidad</div><h3>Registro de no conformidades</h3><p>Seguimiento de hallazgos, acciones correctivas y fechas de cierre.</p></div>
-<div class="tool soon"><div class="mono">En preparación · Contratos</div><h3>Plazos contractuales</h3><p>Calculadora de fechas límite de respuesta y notificación.</p></div>
+<a class="tool" href="herramientas/indices-seguridad/"><div class="mono">SSOMA</div><h3>Índices de seguridad</h3><p>Frecuencia, severidad y accidentabilidad a partir de accidentes, días perdidos y horas-hombre.</p><span class="go">Abrir →</span></a>
+<a class="tool" href="herramientas/no-conformidades"><div class="mono">Calidad</div><h3>Registro de no conformidades</h3><p>Hallazgos, acciones correctivas, responsables y fechas de cierre, con alertas de vencimiento.</p><span class="go">Abrir →</span></a>
+<a class="tool" href="herramientas/plazos-nec4"><div class="mono">Contratos</div><h3>Plazos NEC4</h3><p>Fechas límite de notificación y respuesta según los periodos del contrato.</p><span class="go">Abrir →</span></a>
+<a class="tool" href="herramientas/checklist-iso-9001"><div class="mono">Calidad</div><h3>Checklist ISO 9001:2015</h3><p>Lista de verificación por cláusula con porcentaje de conformidad y exportación.</p><span class="go">Abrir →</span></a>
+<a class="tool" href="herramientas/matriz-iperc"><div class="mono">SSOMA</div><h3>Matriz IPERC</h3><p>Evaluación de riesgos inicial y residual con cálculo automático del nivel.</p><span class="go">Abrir →</span></a>
 </div>
 </div></section>
 
