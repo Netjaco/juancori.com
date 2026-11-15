@@ -41,7 +41,8 @@ nav a.l:hover,nav a.l.on{color:var(--ink);border-color:var(--accent)}
 .hero .wrap{position:relative;padding-top:clamp(56px,9vw,110px);padding-bottom:clamp(48px,7vw,84px)}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:52px;align-items:end}
 .portrait{position:relative;margin:0}
-.portrait::before{content:"";position:absolute;inset:14px -14px -14px 14px;background:var(--accent)}
+.ph{position:relative;display:block}
+.ph::before{content:"";position:absolute;inset:14px -14px -14px 14px;background:var(--accent)}
 .portrait img{position:relative;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border:1.5px solid var(--ink)}
 .portrait figcaption{position:relative;margin-top:24px}
 @media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.portrait{max-width:260px;margin-right:14px}}
@@ -173,7 +174,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 <p class="lead">Soy <strong>Juan Cori</strong>, ingeniero civil (CIP 91864) y magíster en Administración Estratégica de Empresas. Llevo más de veinte años entre <strong>obra, oficina técnica en gran minería y administración de contratos del Estado</strong>. Hoy hago seguimiento de calidad y SSOMA en infraestructura hospitalaria.</p>
 <div class="cta"><a class="btn p" href="#trayectoria">Ver trayectoria</a><a class="btn" href="#contacto">Contactar</a></div>
 </div>
-<figure class="portrait"><img src="img/juan-cori.jpg" width="720" height="900" alt="Retrato de Juan Cori, ingeniero civil"><figcaption class="mono">Ing. Juan Cori · CIP 91864</figcaption></figure>
+<figure class="portrait"><span class="ph"><img src="img/juan-cori.jpg" width="720" height="900" alt="Retrato de Juan Cori, ingeniero civil"></span><figcaption class="mono">Ing. Juan Cori · CIP 91864</figcaption></figure>
 </div></div>
 
 <div class="wrap"><div class="stats">
