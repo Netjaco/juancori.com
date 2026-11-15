@@ -50,6 +50,19 @@ td button{padding:2px 8px;border:0;font-size:16px}
 .empty{color:var(--ink2);font-size:14px;margin:14px 0 0}
 .note{margin-top:34px;font-size:13.5px;color:var(--ink2);max-width:720px}
 h2{font:700 20px Archivo,sans-serif;margin:0}
+.lect{margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--steel);background:var(--card);padding:18px 20px}
+.lect.g{border-left-color:#2b8a3e}.lect.a{border-left-color:#e67700}.lect.r{border-left-color:#c92a2a}
+.lect h2{margin-bottom:6px}.lect p{margin:6px 0 0;font-size:14.5px}.lect .mini{color:var(--ink2);font-size:13.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font:500 12px "IBM Plex Mono",monospace;border:1px solid var(--line);padding:4px 9px;background:var(--paper)}
+tfoot td{font-weight:600;border-top:2px solid var(--ink);border-bottom:0}
+details.guia{margin-top:28px;border:1px solid var(--line);background:var(--card)}
+details.guia summary{cursor:pointer;padding:16px 20px;font:700 18px Archivo,sans-serif}
+details.guia .in{padding:0 20px 20px;font-size:14.5px}
+details.guia h3{font:700 15px Archivo,sans-serif;margin:18px 0 6px}
+details.guia table th:first-child,details.guia table td{text-align:left}
+details.guia td,details.guia th{text-align:left}
+details.guia ul{margin:6px 0 0;padding-left:20px}details.guia li{margin:4px 0}
 .hrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 </style>
 </head>
@@ -76,13 +89,43 @@ h2{font:700 20px Archivo,sans-serif;margin:0}
 <div class="r k"><span class="mono">IA</span><b id="ia">—</b><small>Índice de accidentabilidad</small></div>
 </div>
 <div class="formula">IF = N.º accidentes × 1 000 000 / HHT<br>IS = Días perdidos × 1 000 000 / HHT<br>IA = IF × IS / 1000</div>
+<div class="lect" id="lect" aria-live="polite"><h2>Lectura del resultado</h2><p id="ltxt" class="mini">Ingrese las horas-hombre trabajadas para ver la interpretación.</p><div class="chips" id="chips"></div><p id="lwarn" class="mini"></p></div>
 <div class="box" style="margin-top:22px">
 <div class="hrow"><h2>Historial</h2><div class="btns" style="margin:0"><button id="csv" type="button">Exportar CSV</button><button id="clr" type="button">Borrar todo</button></div></div>
 <p class="empty" id="empty">Aún no hay registros guardados.</p>
-<table id="tb" hidden><thead><tr><th>Periodo</th><th>Acc.</th><th>Días</th><th>HHT</th><th>IF</th><th>IS</th><th>IA</th><th></th></tr></thead><tbody></tbody></table>
+<table id="tb" hidden><thead><tr><th>Periodo</th><th>Acc.</th><th>Días</th><th>HHT</th><th>IF</th><th>IS</th><th>IA</th><th></th></tr></thead><tbody></tbody><tfoot></tfoot></table>
 </div>
 </div>
 </div>
+<details class="guia" open><summary>Cómo leer los índices</summary><div class="in">
+<h3>Qué mide cada uno</h3>
+<ul>
+<li><b>IF, frecuencia:</b> accidentes incapacitantes o mortales por cada millón de horas-hombre. Indica qué tan seguido ocurren. Un millón de horas equivale aproximadamente a 400–500 trabajadores durante un año.</li>
+<li><b>IS, severidad:</b> días perdidos por cada millón de horas-hombre. Indica qué tan graves son. Un accidente mortal se carga por convención con 6000 días.</li>
+<li><b>IA, accidentabilidad:</b> combina ambos en un solo valor para seguir la tendencia entre periodos o frentes. No tiene lectura física directa.</li>
+<li><b>Severidad promedio:</b> días perdidos por accidente (IS ÷ IF).</li>
+</ul>
+<h3>Lectura combinada</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>Frecuencia</th><th>Severidad</th><th>Qué sugiere</th></tr></thead><tbody>
+<tr><td>Baja</td><td>Baja</td><td>Gestión controlada. Mantener y vigilar incidentes y cuasi accidentes.</td></tr>
+<tr><td>Alta</td><td>Baja</td><td>Muchos accidentes leves: orden, supervisión y conducta. Es una advertencia de un evento mayor.</td></tr>
+<tr><td>Baja</td><td>Alta</td><td>Pocos accidentes pero graves: revisar los controles de riesgos críticos (altura, izaje, excavaciones, energía).</td></tr>
+<tr><td>Alta</td><td>Alta</td><td>Gestión deficiente. Requiere intervención inmediata.</td></tr>
+</tbody></table></div>
+<h3>Rangos orientativos del IF</h3>
+<ul>
+<li><b>Menor a 1:</b> nivel de organizaciones con gestión madura; suele ser la meta de los proyectos grandes.</li>
+<li><b>Entre 1 y 5:</b> desempeño aceptable a regular; hay margen de mejora.</li>
+<li><b>Mayor a 5:</b> desempeño deficiente para una obra formal.</li>
+</ul>
+<p class="mini" style="color:var(--ink2);margin-top:8px">Son referencias de uso habitual en la industria, no límites legales. La comparación válida es contra la meta del plan de seguridad del proyecto, el historial propio y la estadística del sector. Para severidad, esta herramienta considera leves los casos con menos de 10 días perdidos por accidente y graves los de más de 30.</p>
+<h3>Precauciones</h3>
+<ul>
+<li><b>Pocas horas distorsionan el índice.</b> Con 50 000 horas en un mes, un solo accidente da un IF de 20. Use el acumulado del proyecto o de los últimos doce meses.</li>
+<li><b>Cero no significa seguro.</b> Puede reflejar buena gestión o subregistro. Contraste con el reporte de incidentes, inspecciones y observaciones.</li>
+<li><b>Verifique la base.</b> Si un reporte usa base de 200 000 horas, multiplique su valor por 5 para compararlo con estos índices.</li>
+</ul>
+</div></details>
 <p class="note">Fórmulas con base de un millón de horas-hombre, como las define el Reglamento de Seguridad y Salud Ocupacional en Minería del Perú (D.S. 024-2016-EM). Algunas organizaciones usan una base de 200 000 horas; verifique el criterio de su proyecto antes de reportar. El historial se guarda solo en este navegador.</p>
 </div></main>
 <script>
@@ -90,19 +133,33 @@ const $=id=>document.getElementById(id),fmt=n=>n.toLocaleString('es-PE',{maximum
 let th=null;try{th=localStorage.getItem('jc-theme')}catch(e){}if(!th&&matchMedia('(prefers-color-scheme:dark)').matches)th='dark';if(th)document.documentElement.dataset.theme=th;
 let hist=[];try{hist=JSON.parse(localStorage.getItem('jc-indices')||'[]')}catch(e){}
 function calc(){const a=+$('acc').value,d=+$('dias').value,h=+$('hht').value;
-if(!(h>0)||a<0||d<0||!Number.isFinite(a+d+h)){['if','is','ia'].forEach(k=>$(k).textContent='—');return null}
-const IF=a*1e6/h,IS=d*1e6/h,IA=IF*IS/1000;$('if').textContent=fmt(IF);$('is').textContent=fmt(IS);$('ia').textContent=fmt(IA);return{a,d,h,IF,IS,IA}}
+if(!(h>0)||a<0||d<0||!Number.isFinite(a+d+h)){['if','is','ia'].forEach(k=>$(k).textContent='—');$('lect').className='lect';$('ltxt').className='mini';$('ltxt').textContent='Ingrese las horas-hombre trabajadas para ver la interpretación.';$('chips').innerHTML='';$('lwarn').textContent='';return null}
+const IF=a*1e6/h,IS=d*1e6/h,IA=IF*IS/1000;$('if').textContent=fmt(IF);$('is').textContent=fmt(IS);$('ia').textContent=fmt(IA);lectura(a,d,h,IF,IS);return{a,d,h,IF,IS,IA}}
+function nivel(a,d,IF){const f=IF<1?0:IF<=5?1:2,avg=a>0?d/a:0,sv=a===0?0:avg<10?0:avg<=30?1:2;return{f,sv,avg}}
+function lectura(a,d,h,IF,IS){const {f,sv,avg}=nivel(a,d,IF);let cls,t;
+  if(a===0&&d===0){cls='g';t='Sin accidentes incapacitantes en el periodo. Confirme que el resultado no se deba a subregistro: revise el reporte de incidentes, inspecciones y observaciones.'}
+  else if(a===0){cls='a';t='Hay días perdidos pero ningún accidente registrado. Revise los datos: los días perdidos deben corresponder a accidentes del periodo o indicarse que provienen de periodos anteriores.'}
+  else if(f===2&&sv===2){cls='r';t='Frecuencia y severidad altas: gestión deficiente. Requiere intervención inmediata y revisión integral de los controles.'}
+  else if(sv===2){cls='r';t='Accidentes graves: en promedio se pierden más de 30 días por caso. Revise los controles de los riesgos críticos, aunque la frecuencia no sea alta.'}
+  else if(f===2){cls='a';t='Frecuencia alta con accidentes mayormente '+(sv===0?'leves':'de severidad media')+'. Apunta a fallas de orden, supervisión y conducta, y es una advertencia de un evento mayor.'}
+  else if(f===1||sv===1){cls='a';t='Desempeño intermedio: hay accidentes con tiempo perdido y margen de mejora. Compare con la meta del plan de seguridad y con los periodos anteriores.'}
+  else{cls='g';t='Frecuencia baja y accidentes leves: gestión controlada. Mantenga la vigilancia sobre incidentes y cuasi accidentes.'}
+  $('lect').className='lect '+cls;$('ltxt').className='';$('ltxt').textContent=t;
+  $('chips').innerHTML=['Frecuencia: '+['baja (IF < 1)','media (IF 1–5)','alta (IF > 5)'][f],a>0?'Severidad promedio: '+fmt(avg)+' días por accidente':'',d>=6000?'Incluye días cargo de un caso mortal o permanente':''].filter(Boolean).map(x=>'<span class="chip">'+x+'</span>').join('');
+  $('lwarn').textContent=h<200000?'Muestra pequeña: con menos de 200 000 horas-hombre, un solo accidente cambia mucho el índice. Interprete junto con el acumulado.':''}
 function save(){try{localStorage.setItem('jc-indices',JSON.stringify(hist))}catch(e){}}
 function draw(){const tb=$('tb').tBodies[0];tb.innerHTML='';$('tb').hidden=!hist.length;$('empty').hidden=!!hist.length;
 hist.forEach((r,i)=>{const tr=tb.insertRow();[r.p,r.a,r.d,fmt(r.h),fmt(r.IF),fmt(r.IS),fmt(r.IA)].forEach(v=>tr.insertCell().textContent=v);
-const b=document.createElement('button');b.textContent='×';b.setAttribute('aria-label','Eliminar registro '+r.p);b.onclick=()=>{hist.splice(i,1);save();draw()};tr.insertCell().append(b)})}
+const b=document.createElement('button');b.textContent='×';b.setAttribute('aria-label','Eliminar registro '+r.p);b.onclick=()=>{hist.splice(i,1);save();draw()};tr.insertCell().append(b)});
+const tf=$('tb').tFoot;tf.innerHTML='';if(hist.length>1){const A=hist.reduce((x,r)=>x+r.a,0),D=hist.reduce((x,r)=>x+r.d,0),H=hist.reduce((x,r)=>x+r.h,0),F=A*1e6/H,S=D*1e6/H,tr=tf.insertRow();
+['Acumulado',A,D,fmt(H),fmt(F),fmt(S),fmt(F*S/1000),''].forEach(v=>tr.insertCell().textContent=v)}}
 ['acc','dias','hht'].forEach(k=>$(k).addEventListener('input',()=>{$('err').textContent='';calc()}));
 $('f').addEventListener('submit',e=>{e.preventDefault();const r=calc();if(!r){$('err').textContent='Ingrese las horas-hombre trabajadas (mayor que cero) y valores no negativos.';return}
 hist.push({p:$('per').value.trim()||'Sin nombre',...r});save();draw()});
 $('f').addEventListener('reset',()=>setTimeout(()=>{$('err').textContent='';calc()}));
 $('clr').onclick=()=>{hist=[];save();draw()};
 $('csv').onclick=()=>{if(!hist.length)return;const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
-const rows=[['Periodo','Accidentes','Dias perdidos','HHT','IF','IS','IA'],...hist.map(r=>[r.p,r.a,r.d,r.h,r.IF.toFixed(2),r.IS.toFixed(2),r.IA.toFixed(2)])];
+const A=hist.reduce((x,r)=>x+r.a,0),D=hist.reduce((x,r)=>x+r.d,0),H=hist.reduce((x,r)=>x+r.h,0);const rows=[['Periodo','Accidentes','Dias perdidos','HHT','IF','IS','IA'],...hist.map(r=>[r.p,r.a,r.d,r.h,r.IF.toFixed(2),r.IS.toFixed(2),r.IA.toFixed(2)]),['Acumulado',A,D,H,(A*1e6/H).toFixed(2),(D*1e6/H).toFixed(2),((A*1e6/H)*(D*1e6/H)/1000).toFixed(2)]];
 const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+rows.map(r=>r.map(q).join(';')).join('\r\n')],{type:'text/csv'}));a.download='indices-seguridad.csv';a.click();URL.revokeObjectURL(a.href)};
 draw();calc();
 </script>
